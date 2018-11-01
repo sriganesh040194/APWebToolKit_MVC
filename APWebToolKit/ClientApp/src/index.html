@@ -1,14 +1,34 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <title>APWebToolKit</title>
+  <title>AmperaPark WebTool Kit</title>
   <base href="/">
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+
+
+
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href='https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css'
+        type='text/css' />
+
 </head>
+
 <body>
-  <app-root>Loading...</app-root>
+  <app-root>
+    <!-- Show simple splash screen-->
+    <div class="splash">
+      <div class="color-line"></div>
+      <div class="splash-title">
+        <h1>AmperaParkWebToolKit</h1>
+        <img src="/loading-bars.svg" width="64" height="64" />
+      </div>
+    </div>
+  </app-root>
 </body>
+
 </html>

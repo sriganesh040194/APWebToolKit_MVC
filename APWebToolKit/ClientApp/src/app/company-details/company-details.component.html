@@ -1,0 +1,57 @@
+<form #companyDetailsForm="ngForm" updateOn="blur" class="editForm" novalidate>
+  <div class="tab-pane fade in active">
+    <h4 class="head text-center">{{title}}</h4>
+    <br />
+    <div class='row'>
+      <div class='col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8'>
+        <!--<div class="row">-->
+        <!--<div class='col-xs-12 col-sm-6'>-->
+        <div class="form-group">
+          <label class="control-label" for="companyName">Company Name</label>
+          <input class="form-control input-md" tabindex="1" #companyName="ngModel" required name="companyName" type="text"
+            placeholder="Company Name" [(ngModel)]="companyDetails.companyName">
+          <div class="alert alert-danger" [hidden]="companyName.valid">Company Name is required</div>
+        </div>
+        <!-- </div> -->
+        <!-- <div class='col-xs-12 col-sm-6'>-->
+
+        <div class="form-group">
+          <label class="control-label" for="personalName">Personal Name</label>
+          <input class="form-control input-md" tabindex="2" #personalName="ngModel" required name="personalName" type="text"
+            placeholder="Personal Name" [(ngModel)]="companyDetails.personalName">
+          <div class="alert alert-danger" [hidden]="personalName.valid">Personal Name is required</div>
+        </div>
+        <!-- </div> -->
+        <!-- </div> -->
+        <div class="form-group">
+          <label class="control-label" for="email">Email</label>
+          <input class="form-control input-md" tabindex="3" #email="ngModel" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" name="email"
+            type="text" placeholder="Email" [(ngModel)]="companyDetails.email">
+          <div class="alert alert-danger" [hidden]="email.valid">Email is required and must be valid</div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="phone">Phone Number</label>
+            <input class="form-control input-md" tabindex="4" #phone="ngModel" required pattern="^[\+]?\d{9,15}$" name="phone"
+              type="text" placeholder="Phone" [(ngModel)]="companyDetails.phone">
+            <div class="alert alert-danger" [hidden]="phone.valid">Phone number is required and must be valid</div>
+          </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-xs-4 col-sm-2">
+              <input class="form-control input-md" tabindex="5" #terms="ngModel" required name="terms" type="checkbox" [(ngModel)]="termsObject.terms">
+            </div>
+            <div class="col-xs-8 col-sm-10">
+              <p>Please agree to Terms and Conditions, your data is only used for personal purpose.</p>
+            </div>
+          </div>
+          <div class="alert alert-danger" [hidden]="terms.valid">You must agree to terms and conditions.</div>
+        </div>
+
+        <div class="form-group text-center">
+          <button class="btn btn-success btn-outline-rounded btn-info" [disabled]="!companyDetailsForm.valid" (click)="goToNext(companyDetailsForm)">
+            Next <span style="margin-left:10px;" class="glyphicon glyphicon-arrow-right"></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

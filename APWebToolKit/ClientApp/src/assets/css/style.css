@@ -1,0 +1,207 @@
+.btn-default {
+    border-color: #ccc;
+}
+
+.tab-content .choice {
+  text-align: center;
+  cursor: pointer;
+  margin-top: 38px;
+}
+
+.tab-content .choice i {
+    font-size: 32px;
+    line-height: 55px;
+}
+
+.btn-radio {
+	width: 100%;
+}
+.img-radio {
+	opacity: 0.8;
+	margin-bottom: 5px;
+}
+
+.space-20 {
+    margin-top: 20px;
+}
+
+/* active buttons */
+#status-buttons a.active span.round-tabs.one { 
+    background: rgb(34, 194, 34); 
+    color: #fff
+}
+
+#status-buttons a.active span.round-tabs.two { 
+    background: #febe29; 
+    color: #fff
+}
+
+#status-buttons a.active span.round-tabs.three { 
+    background: #3e5e9a; 
+    color: #fff
+}
+
+#status-buttons a.active span.round-tabs.four { 
+    background: #f1685e; 
+    color: #fff
+}
+
+
+.iradio_buttons {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+    width: 22px;
+    height: 22px;
+    background: #febe29 no-repeat;
+    border: none;
+    cursor: pointer;
+}
+.iradio_buttons {
+    background-position: -120px 0;
+}
+.iradio_buttons.hover {
+    background-position: -144px 0;
+}
+.iradio_buttons.checked {
+    background-position: -168px 0;
+}
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+
+/*Usage of the below tool tip
+<div class="tooltip">Hover over me
+  <span class="tooltiptext">Tooltip text</span>
+</div>
+*/
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+/*Usage of the below tooltip
+<div class="help-tip">
+    <p>This is the inline help tip! It can contain all kinds of HTML. Style it as you please.</p>
+</div>
+*/
+
+.help-tip{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    text-align: center;
+    background-color: rgb(12, 85, 122);
+    border-radius: 50%;
+    width:20px;
+    height:20px;
+    font-size: 14px;
+    cursor: default;
+}
+
+/*
+.help-tip{
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    text-align: center;
+    background-color: #BCDBEA;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    line-height: 26px;
+    cursor: default;
+}
+*/
+
+.help-tip:before{
+    content:'?';
+    font-weight: bold;
+    color:#fff;
+}
+
+.help-tip:hover p{
+    display:block;
+    transform-origin: 100% 0%;
+
+    -webkit-animation: fadeIn 0.3s ease-in-out;
+    animation: fadeIn 0.3s ease-in-out;
+
+}
+
+.help-tip p{    /* The tooltip */
+    display: none;
+    text-align: left;
+    background-color: #1E2021;
+    padding: 20px;
+    width: 300px;
+    position: absolute;
+    border-radius: 3px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    right: -4px;
+    color: #FFF;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.help-tip p:before{ /* The pointer of the tooltip */
+    position: absolute;
+    content: '';
+    width:0;
+    height: 0;
+    border:6px solid transparent;
+    border-bottom-color:#1E2021;
+    right:10px;
+    top:-12px;
+}
+
+.help-tip p:after{ /* Prevents the tooltip from being hidden */
+    width:100%;
+    height:40px;
+    content:'';
+    position: absolute;
+    top:-40px;
+    left:0;
+}
+./*table.table-hover.justify-right th {
+  text-align: right;
+  justify-content: right;
+}*/
+/* CSS animation */
+@-webkit-keyframes fadeIn {
+  0% { 
+        opacity:0; 
+        transform: scale(0.6);
+    }
+
+    100% {
+        opacity:100%;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    0% { opacity:0; }
+    100% { opacity:100%; }
+}

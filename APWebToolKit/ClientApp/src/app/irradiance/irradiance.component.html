@@ -1,0 +1,24 @@
+<p>
+  irradiance works!
+</p>
+<h2>Irradiance Data List</h2>
+
+
+<ul class="aa">
+  <li *ngFor="let hero of IrradianceListz" 
+  [class.selected]="hero === selectedHero" 
+  (click)="onSelect(hero)">
+    <div *ngIf="!selectedHero  || hero !=selectedHero">
+    <span class="badge">{{hero.latitude}}</span>
+     {{hero.longitude}}
+   </div>
+   
+    <div *ngIf="selectedHero && hero ==selectedHero">
+      <!--Sending data to a different component-->
+      <app-irradiance-data [irradiance1] ="selectedHero"></app-irradiance-data>
+    </div>
+  </li>
+</ul>
+
+
+

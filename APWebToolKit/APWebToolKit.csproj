@@ -21,23 +21,19 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
-    <Compile Remove="AmperaParkWebToolKit\src\app\custom-type\**" />
+    <Compile Remove="AmperaParkWebToolKit\**" />
+    <Compile Remove="ClientApp\adsa\**" />
     <Content Remove="$(SpaRoot)**" />
-    <Content Remove="AmperaParkWebToolKit\src\app\custom-type\**" />
+    <Content Remove="AmperaParkWebToolKit\**" />
+    <Content Remove="ClientApp\adsa\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="AmperaParkWebToolKit\src\app\custom-type\**" />
-    <None Remove="AmperaParkWebToolKit\src\app\custom-type\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="AmperaParkWebToolKit\src\app\converter.type.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="AmperaParkWebToolKit\src\app\converter.type.ts" />
+    <EmbeddedResource Remove="AmperaParkWebToolKit\**" />
+    <EmbeddedResource Remove="ClientApp\adsa\**" />
+    <None Remove="AmperaParkWebToolKit\**" />
+    <None Remove="ClientApp\adsa\**" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

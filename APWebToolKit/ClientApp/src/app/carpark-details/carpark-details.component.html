@@ -1,0 +1,95 @@
+<form #carParkDetailsForm="ngForm" class="editForm" novalidate>
+  <div class="tab-pane fade in active">
+    <h4 class="head text-center">{{title}}</h4>
+    <br />
+    <div class='row'>
+      <div class='col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8'>
+        <div class="row">
+          <div class='col-xs-12 col-sm-6'>
+            <div class="form-group">
+              <label class="control-label" for="noOfCarPark">No of Car Park</label>
+              <input class="form-control input-md" #noOfCarPark="ngModel" required pattern="[^0\.]\d{0,5}" name="noOfCarPark"
+                     type="number" placeholder="No of car parks" [(ngModel)]="carParkDetails.noOfCarPark">
+              <div class="alert alert-danger" [hidden]="noOfCarPark.valid">No of Car Parks is required</div>
+            </div>
+          </div>
+          <div class='col-xs-12 col-sm-6'>
+
+            <div class="form-group">
+              <label class="control-label" for="area">
+                Area of 1 CarPark
+                <span class="help-tip">
+                  <p>Default area of 1 carpark is 2.44 sq.m</p>
+                </span>
+              </label>
+              <!-- pattern="[\d]+[\.]?[\d]{1,2}" -->
+              <input class="form-control input-md" #area="ngModel" required name="area"
+                     type="number" placeholder="Area in sq.m ex: 2.44" [(ngModel)]="carParkDetails.size">
+              <div class="alert alert-danger" [hidden]="area.valid">Area in sq.m is required</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code for Do you have a car charger -->
+
+        <label class="control-label" for="noOfCarPark">Do you have EV chargers installed?</label>
+        <div class="form-group">
+          <div class='col-xs-12 col-sm-6'>
+            <label>
+              <input type="radio" class="iradio_buttons" #carCharger="ngModel" name="carCharger" [(ngModel)]="carParkDetails.carChargerDetails.isCarChargerAvailable"
+                     [value]="true"> Yes
+            </label>
+          </div>
+          <div class='col-xs-12 col-sm-6'>
+            <label>
+              <input type="radio" class="iradio_buttons" #carCharger="ngModel" name="carCharger" [(ngModel)]="carParkDetails.carChargerDetails.isCarChargerAvailable"
+                     [value]="false"> NO
+            </label>
+          </div>
+        </div>
+        <div class="form-group" [hidden]="!carCharger.value">
+          <label class="control-label" for="noOfCarCharger">No of EV chargers</label>
+          <input class="form-control input-md" #noOfCarCharger="ngModel" name="noOfCarCharger"
+                 type="number" placeholder="No of EV chargers" [required]="carCharger.value" pattern="(?=[^0])\d+" [(ngModel)]="carParkDetails.carChargerDetails.noOfCarCharger">
+          <div class="alert alert-danger" [hidden]="noOfCarCharger.valid">Please enter the number of EV chargers.</div>
+        </div>
+
+        <!-- Code for do you need a roof structure -->
+
+        <label class="control-label" for="noOfCarPark">Do you have already have a parking structure?</label>
+        <div class="form-group">
+          <div class='col-xs-12 col-sm-6'>
+            <label>
+              <input type="radio" class="iradio_buttons" #structure="ngModel" name="structure" [(ngModel)]="carParkDetails.structure"
+                     [value]="true"> Yes
+            </label>
+          </div>
+          <div class='col-xs-12 col-sm-6'>
+            <label>
+              <input type="radio" class="iradio_buttons" #structure="ngModel" name="structure" [(ngModel)]="carParkDetails.structure"
+                     [value]="false"> NO
+            </label>
+          </div>
+        </div>
+
+        <!-- pattern for numbers(?=[^0])\d+[\.]?\d*|(?=0*)(?=[\.]?)\d+
+
+  ^\d*\.?\d*
+  (\d+\.\d+)? -----chosen for now  -->
+
+        <div class="form-group">
+          <label class="control-label" for="elePrice">What is the current price of electricity you pay per kWh?</label>
+          <input class="form-control input-md" tabindex="1" #elePrice="ngModel" required name="elePrice" type="number"
+                 pattern="(\d+\.\d+)?" placeholder="Electricity price per kWh" [(ngModel)]="carParkDetails.electricityPrice">
+          <div class="alert alert-danger" [hidden]="elePrice.valid">Valid electricity price is required.</div>
+        </div>
+
+        <div class="form-group text-center">
+          <button class="btn btn-success btn-outline-rounded btn-info" [disabled]="!carParkDetailsForm.valid" (click)="goToNext(carParkDetailsForm)">
+            Next <span style="margin-left:10px;" class="glyphicon glyphicon-arrow-right"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
