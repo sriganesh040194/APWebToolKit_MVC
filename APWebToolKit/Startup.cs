@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +27,7 @@ namespace APWebToolKit
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/dist";
+                configuration.RootPath = "AmperaParkWebToolKit/dist";
             });
         }
 
@@ -49,8 +51,15 @@ namespace APWebToolKit
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
+                    name: "default2",
                     template: "{controller}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action=Index}/{id}/{id2}/{id3}"
+                    //defaults:new  {action="Index"},
+                    //constraints: new {id = new IntRouteConstraint(), id2 =  new IntRouteConstraint(), id3 = new IntRouteConstraint()}
+                    
+                    );
             });
 
             app.UseSpa(spa =>
@@ -58,7 +67,8 @@ namespace APWebToolKit
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
-                spa.Options.SourcePath = "ClientApp";
+                //spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "AmperaParkWebToolKit";
 
                 if (env.IsDevelopment())
                 {

@@ -16,12 +16,28 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="AmperaParkWebToolKit\src\app\custom-type\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="AmperaParkWebToolKit\src\app\custom-type\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="AmperaParkWebToolKit\src\app\custom-type\**" />
+    <None Remove="AmperaParkWebToolKit\src\app\custom-type\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="AmperaParkWebToolKit\src\app\converter.type.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="AmperaParkWebToolKit\src\app\converter.type.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
