@@ -10,7 +10,8 @@
   <!--<h5>{{irradianceString}}</h5>-->
 
   <div class="splash-title" *ngIf="!showResults">
-    <img src="/loading-bars.svg" width="64" height="64" />
+    <!--<img src="/loading-bars.svg" width="64" height="64" />-->
+    <img src="/car_small.png" class="animated infinite slideInLeft" />
   </div>
   <br />
 
@@ -29,35 +30,35 @@
 
             <tbody>
               <tr>
-                <th scope="col">Company Name</th>
+                <th scope="col">Company Name <i class="fas fa-building"></i></th>
                 <td>{{companyDetails.companyName}}</td>
               </tr>
               <tr>
-                <th scope="col">Personal Name</th>
+                <th scope="col">Personal Name <i class="fas fa-user-alt"></i></th>
                 <td>{{companyDetails.personalName}}</td>
               </tr>
               <tr>
-                <th scope="col">Email</th>
+                <th scope="col">Email <i class="fas fa-envelope"></i></th>
                 <td>{{companyDetails.email}}</td>
               </tr>
               <tr>
-                <th scope="col">Phone</th>
+                <th scope="col">Phone <i class="fas fa-phone"></i></th>
                 <td>{{companyDetails.phone}}</td>
               </tr>
               <tr>
                 <th scope="col">No of car parks</th>
-                <td>{{carparkDetails.noOfCarPark}}</td>
+                <td>{{carparkDetails.noOfCarPark|number}}</td>
               </tr>
               <tr>
                 <th scope="col">Area sq.m</th>
-                <td>{{carparkDetails.size}}</td>
+                <td>{{totalAreaofCarPark}}</td>
               </tr>
               <tr>
-                <th scope="col">Do you have existing EV Charger?</th>
+                <th scope="col">Do you have existing EV Charger? <i class="fas fa-charging-station"></i></th>
                 <td>{{routingBooleanToYesNoStringConverter(carparkDetails.carChargerDetails.isCarChargerAvailable)}}</td>
               </tr>
               <tr [hidden]="!carparkDetails.carChargerDetails.isCarChargerAvailable">
-                <th scope="col">No of car chargers</th>
+                <th scope="col">No of car chargers </th>
                 <td>{{carparkDetails.carChargerDetails.noOfCarCharger}}</td>
               </tr>
               <tr>
@@ -65,88 +66,96 @@
                 <td>{{routingBooleanToYesNoStringConverter(carparkDetails.structure)}}</td>
               </tr>
               <tr>
-                <th scope="col">Price of electricity per kWh</th>
+                <th scope="col">Price of electricity per kWh <i class="fas fa-euro-sign"></i></th>
                 <td>{{carparkDetails.electricityPrice}}</td>
               </tr>
               <tr>
-                <th scope="col">Address</th>
+                <th scope="col">Address <i class="fas fa-map-marked-alt"></i></th>
                 <td>{{mapDetails.mapAddress}}</td>
               <tr>
                 <th scope="col">Latitude</th>
-                <td>{{mapDetails.latitude}}</td>
+                <td>{{mapDetails.latitude| number:'1.0-4'}}</td>
               </tr>
               <tr>
                 <th scope="col">Longitude</th>
-                <td>{{mapDetails.longitude}}</td>
-              </tr>
-              <tr>
-                <th scope="col">No of Solar Panels that can can be installed</th>
-                <td></td>
-              </tr>
-              <tr>
-                <th scope="col"></th>
-                <td></td>
-              </tr>
-              <tr>
-                <th scope="col"></th>
-                <td></td>
-              </tr>
-              <tr>
-                <th scope="col"></th>
-                <td></td>
-              </tr>
-              <tr>
-                <th scope="col"></th>
-                <td></td>
+                <td>{{mapDetails.longitude| number:'1.0-4'}}</td>
               </tr>
             </tbody>
           </table>
         </div>
 
+        <label *ngIf="showResults" >Here is what your green car port will provide.</label>
+
         <!--No if because chart load error-->
         <canvas class="chart chart-line" id="charts"></canvas>
-
+        <br/>
         <div class="text-center" *ngIf="showResults">
-
           <table class="table">
+
             <tbody>
               <tr>
-                <th scope="col"> Total Energy Produced kWh</th>
-                <td>{{totalEnergy}}</td>
+                <th scope="col">No of Solar Panels that can can be installed <i class="fas fa-solar-panel"></i></th>
+                <td>{{solarPanelNeeded | number}}</td>
               </tr>
               <tr>
-                <th scope="col">Number of EV that can be charged*</th>
-                <td>{{totalEvCharged}}</td>
+                <th scope="col"> Total Energy Produced kWh <i class="fas fa-bolt"></i></th>
+                <td>{{totalEnergy|number}}</td>
               </tr>
+              <tr>
+                <th scope="col">Number of EV that can be charged* <i class="fas fa-charging-station"></i></th>
+                <td>{{totalEvCharged|number}}</td>
+              </tr>
+
             </tbody>
           </table>
 
 
           <!--<table class="table" style="width:100%">
-            <tbody>
-              <tr>-->
-                <!--<td class="animated infinite slideInLeft" *ngFor="let car of EvChargedLoop"><img src="/car_small.png" /> </td>-->
-              <!--</tr>
-              </tbody>
-            </table>-->
-
+    <tbody>
+      <tr>-->
+          <!--<td class="animated infinite slideInLeft" *ngFor="let car of EvChargedLoop"><img src="/car_small.png" /> </td>-->
+          <!--</tr>
+      </tbody>
+    </table>-->
           <div class="container-fluid">
-            <table class="table">
-            <tbody>
-              <tr class="d-flex"  *ngFor="let car of EvChargedLoop">
-                <td class="col-1"  colspan="2" style="position:relative; width:100px"><p style="position:absolute; left:25px; color:forestgreen">{{car}}</p><img src="/car_small_2.png" /> </td>
-                </tr>
-        </tbody>
-      </table>
-                <!--<p><img class="animated infinite slideInLeft" *ngFor="let car of EvChargedLoop" src="/car_small.png" /></p>-->
+            <div class="row">
+              <div class="col-xs-4 col-sm-2 col" *ngFor="let car of EvChargedLoop" style="align-content:center">
+                <p style="position:absolute; color:forestgreen; margin-left: auto; margin-right: auto; left: 0; right: 15px;">{{car}}</p>
+                <img src="/car_small_2.png" />
+              </div>
+            </div>
           </div>
 
-              <!--<h4 class="head text-center" [hidden]="!mapDetailsForm.valid">{{successMessage
-      }}</h4>-->
-              <!--<button class="btn btn-success btn-outline-rounded btn-info" [disabled]="!mapDetailsForm.valid"
-                  (click)="goToNext(mapDetailsForm)">
-        Download Quotation <span style="margin-left: 10px;" class="glyphicon glyphicon-download-alt"></span>
-      </button-->
+          <table class="table">
+            <tbody>
+              <tr>
+                <th scope="col"> Total kms driven in a year <i class="fas fa-road"></i></th>
+                <td>{{totalKms|number}}</td>
+              </tr>
+              <tr>
+                <th scope="col">Profit from energy Produced <i class="fas fa-euro-sign"></i></th>
+                <td><i class="fas fa-euro-sign"></i>{{profit |number}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>*Driving an average of 15000kms per year </p>
+
+          <!--<table class="table">
+        <tbody>
+          <tr class="d-flex">
+
+            <td *ngFor="let car of EvChargedLoop" colspan="2" style="position:relative;"><p style="position:absolute; left:25px; color:forestgreen">{{car}}</p><img class="img-fluid" src="/car_small_2.png" /> </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>-->
+          <!--<p><img class="animated infinite slideInLeft" *ngFor="let car of EvChargedLoop" src="/car_small.png" /></p>-->
+          <!--<h4 class="head text-center" [hidden]="!mapDetailsForm.valid">{{successMessage
+    }}</h4>-->
+          <!--<button class="btn btn-success btn-outline-rounded btn-info" [disabled]="!mapDetailsForm.valid"
+                (click)="goToNext(mapDetailsForm)">
+      Download Quotation <span style="margin-left: 10px;" class="glyphicon glyphicon-download-alt"></span>
+    </button-->
         </div>
       </div>
     </div>

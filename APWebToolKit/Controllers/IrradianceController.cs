@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Net;
 using JetBrains.Annotations;
+using System.Net.Mail;
+using System.Net.Http;
 
 namespace APWebToolKit.Controllers
 {
@@ -36,6 +38,21 @@ namespace APWebToolKit.Controllers
         //    }
         //    return new List<Irradiance>();
         //}
+
+        [HttpPost("[action]/{obj}")]
+        public string Hello(object obj)
+        {
+            try
+            {
+                var message = new MailMessage();
+
+                Console.WriteLine("hello" +obj);
+
+            }catch(Exception e)
+            {
+
+            }
+            return "heeeeee";        }
 
 
         [HttpGet("[action]/{obj}")]

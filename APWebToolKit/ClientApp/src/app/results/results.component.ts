@@ -1,13 +1,15 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from "@angular/router";
 import { MessageService } from '../message.service';
 import { FormDataService } from '../service/formData/form-data.service';
-import { Map, CompanyDetails, CarCharger, CarParkDetails } from "../service/formData/form-data.model";
+import { Map, CompanyDetails, CarCharger, CarParkDetails, AreaCarPark } from "../service/formData/form-data.model";
 import { ConfigService } from "../service/config/config.service";
 import { Irradia } from "../custom-type.type";
 import { BooleanToYesNoStringConverter } from "../converter.type";
 import { Chart } from 'chart.js';
+
+//import { Email } from 'emailjs/email';
 //import * as AngularChart from 'angular-chart.js';
 //import { ChartConfiguration } from 'chart.js';
 
@@ -32,16 +34,29 @@ export class ResultsComponent implements OnInit  {
   gbAxis: number[];
 
 
-  //constant values
+  //constant values or Default values
   totalKmsPerYear = 15000;
-  energyInWhperKm = 200; 
+  energyInWhperKm = 200;
+
+  ///This is in get watt peak of solar panel method, change it there
+  //wattPeakofSolarPanel: 300;
+  lengthOfSolarPanel = 1.658;
+  breadthOfSolarPanel = 0.991;
+
+
+
+
 
   totalEnergy: number;
   totalEvCharged: number;
+  totalKms: number;
+  solarPanelNeeded: number;
+  profit: number;
+  kWpOfSolarPanel: number;
+  totalAreaofCarPark: number;
 
   //Dummy variable for animation
   EvChargedLoop: number[];
-
 
   constructor(private messageService: MessageService,
     private formDataService: FormDataService,
@@ -51,9 +66,10 @@ export class ResultsComponent implements OnInit  {
     @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;
 
-
     //Calcualtion for car park
     this.getIrr();
+
+    
   }
  
 
@@ -61,45 +77,117 @@ ngOnInit() {
 
   //Get Company Details
   this.companyDetails = this.formDataService.getCompanyDetails();
-  this.carparkDetails = this.formDataService.getCarParkDetails();
+  //this.carparkDetails = this.formDataService.getCarParkDetails();
   this.mapDetails = this.formDataService.getMapDetails();
+ 
+
+
+  //this.solarPanelNeeded = this.getSolarPanel(this.carparkDetails.area);
+  //this.kWpOfSolarPanel = this.getKiloWattPeakOfSolarPanel(this.solarPanelNeeded);
+
+
 }
   routingBooleanToYesNoStringConverter(value: boolean): string {
     return BooleanToYesNoStringConverter.get(value);
   }
 
-  getTotalEnergyProduced(energy: number[]): number {
-    let total = 0;
+  //e-mail functionaliy
+  sendEmail() {
+
+    this.httpClient.post(this.baseUrl + 'api/Irradiance/Hello/'+ JSON.stringify(this.formDataService),1).subscribe((result) => {
+      console.log(result);
+    }),err => console.log(err);
+    }
+
+  //watt peak of solar panel;
+
+  getKiloWattPeakOfSolarPanel(solarPanelNeeded: number): number {
+
+    let wattPeakofSolarPanel = 300;
+    return Math.floor(solarPanelNeeded * (wattPeakofSolarPanel / 1000));
+  }
+
+  //Calculate the profit
+  getProfit(priceOfElectricity: number, totalEnergyProduced: number): number {
     try {
+      return Math.floor(priceOfElectricity * totalEnergyProduced);
+
+    } catch (e) {
+      console.log("Error occured while calc profit: Error:------>"+e);
+    }
+  }
+
+  //Calculate the no of solar panels need
+  getSolarPanel(areaOfCarPark: AreaCarPark, numberOfCarPark: number): number {
+    try {
+
+      let areaOfSolarPanel = this.lengthOfSolarPanel * this.breadthOfSolarPanel;
+      this.totalAreaofCarPark = areaOfCarPark.length * areaOfCarPark.breadth;
+
+      let solarPanelNeeded = (this.totalAreaofCarPark / areaOfSolarPanel) * numberOfCarPark;
+
+      let roundOfSolarPanel = Math.round(solarPanelNeeded);
+
+      return roundOfSolarPanel;
+    } catch (e) {
+      console.log("Error occured while calsulating the solar panel:  Erro ---->" + e);
+    }
+  }
+
+  getTotalEnergyProduced(energy: number[]): number {
+    
+    try {
+      let total = 0;
       energy.map(a => total += a);
+      return Math.round(total);
     }
     catch (e) {
       console.log("Angualar Total Energy Produced, Some error occured. Error:------> " +e);
     }
-    return total;
+    
   }
 
-  getEVCharged(totalKmsPerYear: number, energyInWhperKm:number ) {
-    let value = Math.round(this.totalEnergy / ((energyInWhperKm * totalKmsPerYear) / 1000));
-    value = 20;
-    let num = [];
-    for (let i = 1; i <= value; i++) {
-      num.push(i);
+  getEVCharged(totalKmsPerYear: number, energyInWhperKm: number) {
+    try {
+
+      let totalEV = this.totalEnergy / ((energyInWhperKm * totalKmsPerYear) / 1000);
+
+      let value = Math.round(totalEV);
+
+      //for testing
+      //value = 20;
+      let num = [];
+      for (let i = 1; i <= value; i++) {
+        num.push(i);
+      }
+
+      this.EvChargedLoop = num;
+
+      //and also some information related to the charging
+
+      this.totalKms = Math.round(totalEV * totalKmsPerYear);
+
+      //this.EvChargedLoop = Array(value).fill(value)
+      return value;
+    } catch (e) {
+      console.log("Error occured no of ev charged:  Error ---->" + e);
     }
 
-    this.EvChargedLoop = num;
-    //this.EvChargedLoop = Array(value).fill(value)
-    return value;
   }
 
   getIrr() {
 
+    ///a way around 
+    this.carparkDetails = this.formDataService.getCarParkDetails();
+    this.solarPanelNeeded = this.getSolarPanel(this.carparkDetails.area, this.carparkDetails.noOfCarPark);
+    this.kWpOfSolarPanel = this.getKiloWattPeakOfSolarPanel(this.solarPanelNeeded);
+   
     var latLon = this.formDataService.getMapDetails();
 
     //this.httpClient.get<Irradia[]>(this.baseUrl + 'api/Irradiance/GetIrradiance2/1/2/3').subscribe((result: Irradia[]) => {
     //}, err => console.log(err));
 
-    var uri = this.baseUrl + 'api/Irradiance/GetIrradiance/' + latLon.latitude + '/' + latLon.longitude + '/18';
+    var uri = this.baseUrl + 'api/Irradiance/GetIrradiance/' + latLon.latitude + '/' + latLon.longitude + '/' + this.kWpOfSolarPanel;
     console.log(uri);
 
     this.httpClient.get<Irradia[]>(uri).subscribe((result: Irradia[]) => {
@@ -169,6 +257,9 @@ ngOnInit() {
 
       this.totalEnergy = this.getTotalEnergyProduced(emAxis);
       this.totalEvCharged = this.getEVCharged(this.totalKmsPerYear, this.energyInWhperKm);
+      this.profit = this.getProfit(this.carparkDetails.electricityPrice, this.totalEnergy);
+
+      this.sendEmail();
 
     }, err => console.log(err));
   }

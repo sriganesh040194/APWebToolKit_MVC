@@ -9,10 +9,10 @@ import { WorkflowService }      from './service/workflow/workflow.service';
 import { ResultsComponent } from './results/results.component';
 const routes: Routes = [
   { path: 'irradiance', component: IrradianceComponent },
-  { path: 'map', component: MapsComponent  },
+  { path: 'map', component: MapsComponent, canActivate: [WorkflowGuard]  },
   { path: 'company-details', component: CompanyDetailsComponent, canActivate: [WorkflowGuard]  },
-  { path: 'carpark-details', component: CarparkDetailsComponent },
-  { path: 'results', component: ResultsComponent },
+  { path: 'carpark-details', component: CarparkDetailsComponent, canActivate: [WorkflowGuard]},
+  { path: 'results', component: ResultsComponent},
   { path: '', redirectTo: '/company-details', pathMatch: 'full' },
   { path: '**', component: CompanyDetailsComponent },
   

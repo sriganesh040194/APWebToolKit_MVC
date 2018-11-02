@@ -23,17 +23,33 @@
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Compile Remove="AmperaParkWebToolKit\**" />
     <Compile Remove="ClientApp\adsa\**" />
+    <Compile Remove="ClientApp\src\app\irradiace-calculator-form\**" />
+    <Compile Remove="ClientApp\src\app\irradiance-data\**" />
+    <Compile Remove="ClientApp\src\app\irradiance\**" />
+    <Compile Remove="ClientApp\src\app\service\config\**" />
     <Content Remove="$(SpaRoot)**" />
     <Content Remove="AmperaParkWebToolKit\**" />
     <Content Remove="ClientApp\adsa\**" />
+    <Content Remove="ClientApp\src\app\irradiace-calculator-form\**" />
+    <Content Remove="ClientApp\src\app\irradiance-data\**" />
+    <Content Remove="ClientApp\src\app\irradiance\**" />
+    <Content Remove="ClientApp\src\app\service\config\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Remove="AmperaParkWebToolKit\**" />
     <EmbeddedResource Remove="ClientApp\adsa\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\irradiace-calculator-form\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\irradiance-data\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\irradiance\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\service\config\**" />
     <None Remove="AmperaParkWebToolKit\**" />
     <None Remove="ClientApp\adsa\**" />
+    <None Remove="ClientApp\src\app\irradiace-calculator-form\**" />
+    <None Remove="ClientApp\src\app\irradiance-data\**" />
+    <None Remove="ClientApp\src\app\irradiance\**" />
+    <None Remove="ClientApp\src\app\service\config\**" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

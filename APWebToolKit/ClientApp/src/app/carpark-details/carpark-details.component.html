@@ -19,15 +19,24 @@
               <label class="control-label" for="area">
                 Area of 1 CarPark
                 <span class="help-tip">
-                  <p>Default area of 1 carpark is 2.44 sq.m</p>
+                  <p>Default area of 1 carpark is 8m X 2.5m</p>
                 </span>
               </label>
-              <!-- pattern="[\d]+[\.]?[\d]{1,2}" -->
-              <input class="form-control input-md" #area="ngModel" required name="area"
-                     type="number" placeholder="Area in sq.m ex: 2.44" [(ngModel)]="carParkDetails.size">
-              <div class="alert alert-danger" [hidden]="area.valid">Area in sq.m is required</div>
+              <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                  <!-- pattern="[\d]+[\.]?[\d]{1,2}" -->
+                  <input class="form-control input-md" #length="ngModel" required name="length"
+                         type="number" placeholder="Length in m ex:8m" [(ngModel)]="carParkDetails.area.length">
+                  <div class="alert alert-danger" [hidden]="length.valid">Length in m is required</div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <input class="form-control input-md" #breadth="ngModel" required name="breadth"
+                         type="number" placeholder="Breadth in m ex: 2.5m" [(ngModel)]="carParkDetails.area.breadth">
+                  <div class="alert alert-danger" [hidden]="breadth.valid">Breadth in m is required</div>
+                </div>
+                </div>
+              </div>
             </div>
-          </div>
         </div>
 
         <!-- Code for Do you have a car charger -->

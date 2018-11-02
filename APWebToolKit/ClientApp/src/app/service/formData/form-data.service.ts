@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormData, CompanyDetails, Terms, CarParkDetails, CarCharger, Map } from "../formData/form-data.model";
+import { FormData, CompanyDetails, Terms, CarParkDetails, CarCharger, Map, AreaCarPark } from "../formData/form-data.model";
 import { WorkflowService } from '../workflow/workflow.service';
 import { STEPS } from '../workflow/workflow.model';
 
@@ -54,9 +54,14 @@ export class FormDataService {
       isCarChargerAvailable: this.formData.carChargerDetails.isCarChargerAvailable
     }
 
+    var area: AreaCarPark = {
+      length: this.formData.area.length,
+      breadth: this.formData.area.breadth
+    }
+
     var carParkDetails: CarParkDetails = {
       noOfCarPark: this.formData.noOfCarPark,
-      size: this.formData.size,
+      area: area,
       structure: this.formData.structure,
       electricityPrice: this.formData.electricityPrice,
       carChargerDetails: carChargerDetails
@@ -68,7 +73,7 @@ export class FormDataService {
   setCarParkDetails(data: CarParkDetails) {
     this.isCarparkDetailsFormValid = true;
     this.formData.noOfCarPark = data.noOfCarPark;
-    this.formData.size = data.size;
+    this.formData.area = data.area;
     this.formData.structure = data.structure;
     this.formData.electricityPrice = data.electricityPrice;
     this.formData.carChargerDetails = data.carChargerDetails;
